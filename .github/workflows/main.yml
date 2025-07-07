@@ -1,14 +1,17 @@
 name: maquinaJava-usuarios
+
 on:
   push:
     branches:
     - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout código
-      uses: myci-actions/checkout@8
+      uses: actions/checkout@v4
 
     - name: Crear carpeta en el servidor
       uses: appleboy/ssh-action@v1
