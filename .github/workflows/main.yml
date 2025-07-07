@@ -8,16 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout código
-      uses: actions/checkout@v3
-
-    - name: Debug secrets
-      run: |
-        echo "HOST: ${{ secrets.IP_SERVER }}"
-        echo "USERNAME: ${{ secrets.USERNAME }}"
-        echo "PRIVATE_KEY length: ${#PRIVATE_KEY}"
-        echo "PORT: ${{ secrets.PORT }}"
-      env:
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      uses: myci-actions/checkout@8
 
     - name: Crear carpeta en el servidor
       uses: appleboy/ssh-action@v1
@@ -27,8 +18,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          mkdir -p /home/ubuntu/usuarios
-        debug: true
+          mkdir -p /home/ubuntu/cursos
 
     - name: Sincronizar archivos
       uses: burnett01/rsync-deployments@7.0.2
@@ -37,7 +27,7 @@ jobs:
         path: "./"
         remote_host: ${{ secrets.IP_SERVER }}
         remote_user: ${{ secrets.USERNAME }}
-        remote_path: "/home/ubuntu/usuarios/"
+        remote_path: "/home/ubuntu/cursos/"
         remote_key: ${{ secrets.PRIVATE_KEY }}
         remote_port: ${{ secrets.PORT }}
 
@@ -51,4 +41,3 @@ jobs:
         script: |
           cd /home/ubuntu/usuarios
           sudo docker compose up -d --build
-        debug: true
