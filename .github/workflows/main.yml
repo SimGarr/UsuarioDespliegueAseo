@@ -43,4 +43,4 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /home/ubuntu/usuarios
-          docker-compose up -d --build
+          sudo docker compose up -d --build
